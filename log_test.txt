@@ -1,0 +1,100 @@
+[iocuser@ics-mtcacpu-nat047 ~]$ sudo lspci -v -s 00:19.0
+
+00:19.0 Ethernet controller: Intel Corporation 82579LM Gigabit Network Connection (rev 04)
+	Subsystem: GE Intelligent Platforms Device bc14
+	Flags: bus master, fast devsel, latency 0, IRQ 41
+	Memory at f4900000 (32-bit, non-prefetchable) [size=128K]
+	Memory at f4935000 (32-bit, non-prefetchable) [size=4K]
+	I/O ports at f080 [size=32]
+	Capabilities: [c8] Power Management version 2
+	Capabilities: [d0] MSI: Enable+ Count=1/1 Maskable- 64bit+
+	Capabilities: [e0] PCI Advanced Features
+	Kernel driver in use: e1000e
+	Kernel modules: e1000e
+
+[iocuser@ics-mtcacpu-nat047 ~]$ sudo cat /sys/devices/pci0000\:00/0000\:00\:19.0/resource
+
+0x00000000f4900000 0x00000000f491ffff 0x0000000000040200
+0x00000000f4935000 0x00000000f4935fff 0x0000000000040200
+0x000000000000f080 0x000000000000f09f 0x0000000000040101
+0x0000000000000000 0x0000000000000000 0x0000000000000000
+0x0000000000000000 0x0000000000000000 0x0000000000000000
+0x0000000000000000 0x0000000000000000 0x0000000000000000
+0x0000000000000000 0x0000000000000000 0x0000000000000000
+0x0000000000000000 0x0000000000000000 0x0000000000000000
+0x0000000000000000 0x0000000000000000 0x0000000000000000
+0x0000000000000000 0x0000000000000000 0x0000000000000000
+0x0000000000000000 0x0000000000000000 0x0000000000000000
+0x0000000000000000 0x0000000000000000 0x0000000000000000
+0x0000000000000000 0x0000000000000000 0x0000000000000000
+
+/* ***************************************************************************************** */
+
+
+[iocuser@ics-mtcacpu-nat047 0000:06:00.0]$ pwd
+/sys/devices/pci0000:00/0000:00:01.0/0000:01:00.0/0000:02:03.0/0000:06:00.0
+[iocuser@ics-mtcacpu-nat047 0000:06:00.0]$ cat subsystem_device 
+0x0002
+[iocuser@ics-mtcacpu-nat047 0000:06:00.0]$ cat subsystem_vendor 
+0x1234
+[iocuser@ics-mtcacpu-nat047 0000:06:00.0]$ cat resource
+0x00000000e0000000 0x00000000e7ffffff 0x000000000014220c
+0x0000000000000000 0x0000000000000000 0x0000000000000000
+0x00000000f0000000 0x00000000f3ffffff 0x0000000000040200
+0x00000000f4000000 0x00000000f4001fff 0x0000000000040200
+0x000000000000c000 0x000000000000dfff 0x0000000000040101
+0x0000000000000000 0x0000000000000000 0x0000000000000000
+0x0000000000000000 0x0000000000000000 0x0000000000000000
+0x0000000000000000 0x0000000000000000 0x0000000000000000
+0x0000000000000000 0x0000000000000000 0x0000000000000000
+0x0000000000000000 0x0000000000000000 0x0000000000000000
+0x0000000000000000 0x0000000000000000 0x0000000000000000
+0x0000000000000000 0x0000000000000000 0x0000000000000000
+0x0000000000000000 0x0000000000000000 0x0000000000000000
+[iocuser@ics-mtcacpu-nat047 0000:06:00.0]$ sudo lspci -v -s 06:00.0
+[sudo] password for iocuser: 
+06:00.0 Bridge: Device 7357:1002
+	Subsystem: Device 1234:0002
+	Physical Slot: 1
+	Flags: fast devsel, IRQ 14
+	Memory at e0000000 (64-bit, prefetchable) [disabled] [size=128M]
+	Memory at f0000000 (32-bit, non-prefetchable) [disabled] [size=64M]
+	Memory at f4000000 (32-bit, non-prefetchable) [disabled] [size=8K]
+	I/O ports at c000 [disabled] [size=8K]
+	Capabilities: [80] Power Management version 3
+	Capabilities: [90] MSI: Enable- Count=1/1 Maskable- 64bit+
+	Capabilities: [c0] Express Legacy Endpoint, MSI 00
+	Capabilities: [100] Advanced Error Reporting
+	Capabilities: [300] #19
+
+/* *************************************************************************************** */
+
+[iocuser@ics-mtcacpu-nat047 pcimem]$ ls -l
+total 60
+-rw-rw-r--. 1 iocuser iocuser 18092 Feb 20 14:39 LICENSE.txt
+-rw-rw-r--. 1 iocuser iocuser    96 Feb 20 14:39 Makefile
+-rwxrwxr-x. 1 iocuser iocuser 21280 Feb 20 14:39 pcimem
+-rw-rw-r--. 1 iocuser iocuser  4038 Feb 20 14:39 pcimem.c
+lrwxrwxrwx. 1 root    root       75 Feb 20 16:51 pmc01 -> /sys/devices/pci0000:00/0000:00:01.0/0000:01:00.0/0000:02:03.0/0000:06:00.0
+-rw-rw-r--. 1 iocuser iocuser  5676 Feb 20 14:39 README
+[iocuser@ics-mtcacpu-nat047 pcimem]$ 
+[iocuser@ics-mtcacpu-nat047 pcimem]$ 
+[iocuser@ics-mtcacpu-nat047 pcimem]$ sudo ./pcimem pmc01/resource0 0 d
+pmc01/resource0 opened.
+Target offset is 0x0, page size is 4096
+mmap(0, 4096, 0x3, 0x1, 3, 0x0)
+PCI Memory mapped to address 0x7fa0d423d000.
+Value at offset 0x0 (0x7fa0d423d000): 0xFFFFFFFF
+[iocuser@ics-mtcacpu-nat047 pcimem]$ 
+[iocuser@ics-mtcacpu-nat047 pcimem]$ sudo ./pcimem pmc01/resource1 0 d
+Error at line 72, file pcimem.c (2) [No such file or directory]
+[iocuser@ics-mtcacpu-nat047 pcimem]$ 
+[iocuser@ics-mtcacpu-nat047 pcimem]$ sudo ./pcimem pmc01/resource2 0 d
+pmc01/resource2 opened.
+Target offset is 0x0, page size is 4096
+mmap(0, 4096, 0x3, 0x1, 3, 0x0)
+PCI Memory mapped to address 0x7fbac4d0c000.
+Value at offset 0x0 (0x7fbac4d0c000): 0xFFFFFFFF
+[iocuser@ics-mtcacpu-nat047 pcimem]$ 
+
+
