@@ -92,6 +92,9 @@ int main(int argc, char **argv) {
 		case 'w':
 			read_result = *((uint32_t *) virt_addr);
 			break;
+		case 'd':
+			read_result = *((uint64_t *) virt_addr);
+			break;
 		default:
 			fprintf(stderr, "Illegal data type '%c'.\n", access_type);
 			exit(2);
@@ -113,6 +116,10 @@ int main(int argc, char **argv) {
 			case 'w':
 				*((uint32_t *) virt_addr) = writeval;
 				read_result = *((uint32_t *) virt_addr);
+				break;
+			case 'd':
+				*((uint64_t *) virt_addr) = writeval;
+				read_result = *((uint64_t *) virt_addr);
 				break;
 		}
 		printf("Written 0x%X; readback 0x%X\n", writeval, read_result);
