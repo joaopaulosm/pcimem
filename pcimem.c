@@ -47,7 +47,7 @@
 int main(int argc, char **argv) {
 	int fd;
 	void *map_base, *virt_addr;
-	uint32_t read_result, writeval;
+	uint64_t read_result, writeval;
 	char *filename;
 	off_t target;
 	int access_type = 'w';
@@ -99,7 +99,7 @@ int main(int argc, char **argv) {
 			fprintf(stderr, "Illegal data type '%c'.\n", access_type);
 			exit(2);
 	}
-    printf("Value at offset 0x%X (%p): 0x%X\n", (int) target, virt_addr, read_result);
+    printf("Value at offset 0x%X (%p): 0x%08lx \n", (int) target, virt_addr, read_result);
     fflush(stdout);
 
 	if(argc > 4) {
@@ -122,7 +122,7 @@ int main(int argc, char **argv) {
 				read_result = *((uint64_t *) virt_addr);
 				break;
 		}
-		printf("Written 0x%X; readback 0x%X\n", writeval, read_result);
+		printf("Written 0x%08lx; readback 0x%08lx\n", writeval, read_result);
 		fflush(stdout);
 	}
 
